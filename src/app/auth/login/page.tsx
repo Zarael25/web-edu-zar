@@ -2,10 +2,45 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import { loginUsuario } from "@/services/auth";
+
 
 const LoginPage = () => {
   const [carnet, setCarnet] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!carnet || !password) {
+      alert("Debe ingresar carnet y contraseña");
+      return;
+    }
+
+    try {
+      const data = await loginUsuario(carnet, password);
+
+      // ✅ Login correcto
+      alert("Inicio de sesión exitoso");
+
+      console.log("Respuesta login:", data);
+
+      // (opcional más adelante)
+      // localStorage.setItem("token", data.token);
+
+    } catch (error: any) {
+      // ❌ Error en login
+      alert(error.message || "Error al iniciar sesión");
+    }
+  };
+
+
+
+
 
   return (
     <section className="min-h-screen flex items-center justify-center">
@@ -15,7 +50,7 @@ const LoginPage = () => {
 
         <h2 className="mb-6 text-center text-white font-brand">Edu.Zar</h2>
 
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={handleLogin}>
           <div className="mb-[22px]">
             <input
               type="text"
@@ -27,14 +62,25 @@ const LoginPage = () => {
             />
           </div>
 
-          <div className="mb-[22px]">
+          <div className="mb-[22px] relative">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-md border border-white/20 bg-transparent px-5 py-3 text-base outline-none transition placeholder:text-grey focus:border-primary text-white"
+              className="w-full rounded-md border border-white/20 bg-transparent px-5 py-3 pr-12 text-base outline-none transition placeholder:text-grey focus:border-primary text-white"
             />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-primary transition"
+            >
+              <Icon
+                icon={showPassword ? "tabler:eye-off" : "tabler:eye"}
+                className="text-[24px]"
+              />
+            </button>
           </div>
 
           <div className="mb-9">
