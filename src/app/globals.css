@@ -3,36 +3,45 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --shadow-mentor-shadow: 0px 4px 20px rgba(110, 127, 185, 0.1);
+  --shadow-mentor-shadow: 0px 0px 20px rgba(235, 166, 175, 0.1);
 
   --inset-54\%: 54%;
   --inset-40\%: 40%;
 
-  --color-primary: #bd24df;
-  --color-secondary: #2d6ade;
-  --color-body-bg: #040D26;
-  --color-darkmode: #0c1b44;
-  --color-tablebg: #132259;
-  --color-border: #091945;
-  --color-lightblue: #8a9bca;
-  --color-lightsky: #ECF2FF;
-  --color-lightpurple: #B4C7ED;
+  /* 🔥 Lava Red (más rojo, menos naranja) */
+  --color-primary: #B11226;     /* rojo profundo */
+  --color-secondary: #D32F2F;   /* rojo vivo */
+
+  --color-body-bg: #140A0A;
+  --color-darkmode: #1F0F0F;
+  --color-tablebg: #261212;
+  --color-border: #3A1A1A;
+
+  --color-lightblue: #D6A6A1;
+  --color-lightsky: #F2E6E4;
+  --color-lightpurple: #F5B7B1;
 
   --blur-390: 390px;
 
   --background-image-banner-image: linear-gradient(
     90deg,
-    #bd24df80,
-    #2d6ade80 97.15%
+    rgba(177, 18, 38, 0.55),
+    rgba(211, 47, 47, 0.55) 97.15%
   );
+
   --background-image-simple-bg: linear-gradient(
     90deg,
-    rgba(189, 36, 223, 0.1),
-    rgba(45, 106, 222, 0.1) 97.15%
+    rgba(177, 18, 38, 0.12),
+    rgba(211, 47, 47, 0.12) 97.15%
   );
-  --background-image-arrow-bg: url('/images/simple/arrow-bg.png');
-  --background-image-newsletter: url('/images/newsletter/hands.svg');
+
+
+  --font-brand: var(--font-gugi);
+  --font-body: var(--font-zain);
+
 }
+
+
 
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
@@ -49,6 +58,10 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
+  }
+
+  body {
+    font-family: var(--font-body), system-ui, sans-serif;
   }
 
   section {
@@ -73,3 +86,5 @@
 html {
   scroll-behavior: smooth;
 }
+
+

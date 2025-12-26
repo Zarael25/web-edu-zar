@@ -4,29 +4,33 @@ import { useState } from "react";
 import Link from "next/link";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
+  const [carnet, setCarnet] = useState("");
   const [password, setPassword] = useState("");
 
   return (
     <section className="min-h-screen flex items-center justify-center">
-      <div className="bg-darkmode w-full max-w-md rounded-lg shadow-mentor-shadow p-8">
-        <h2 className="mb-6 text-center">Iniciar sesión</h2>
+      <div
+        className="relative mx-auto w-full max-w-md bg-simple-bg backdrop-blur-md rounded-lg shadow-mentor-shadow px-8 pt-14 pb-8 text-center"
+      >
+
+        <h2 className="mb-6 text-center text-white font-brand">Edu.Zar</h2>
 
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="mb-[22px]">
             <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              placeholder="Carnet de identidad"
+              value={carnet}
+              onChange={(e) => setCarnet(e.target.value)}
               className="w-full rounded-md border border-white/20 bg-transparent px-5 py-3 text-base outline-none transition placeholder:text-grey focus:border-primary text-white"
+              inputMode="numeric"
             />
           </div>
 
           <div className="mb-[22px]">
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Contraseña"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full rounded-md border border-white/20 bg-transparent px-5 py-3 text-base outline-none transition placeholder:text-grey focus:border-primary text-white"
@@ -38,7 +42,7 @@ const LoginPage = () => {
               type="submit"
               className="bg-primary w-full py-3 rounded-lg text-lg text-white font-medium border border-primary hover:text-primary hover:bg-transparent transition"
             >
-              Sign In
+              Iniciar Sesión
             </button>
           </div>
         </form>
