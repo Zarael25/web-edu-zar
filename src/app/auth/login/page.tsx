@@ -3,37 +3,40 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { loginUsuario } from "@/services/auth";
-
+import { loginUsuario,getMe } from "@/services/auth";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const [carnet, setCarnet] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const router = useRouter();
 
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
 
     if (!carnet || !password) {
       alert("Debe ingresar carnet y contraseña");
       return;
     }
 
+
+
     try {
-      const data = await loginUsuario(carnet, password);
+      // 1️⃣ Login → backend guarda cookie HttpOnly
+      await loginUsuario(carnet, password);
 
-      // ✅ Login correcto
-      alert("Inicio de sesión exitoso");
+      // 2️⃣ Obtener usuario real desde el backend
+      const me = await getMe();
 
-      console.log("Respuesta login:", data);
+      // 3️⃣ Guardar usuario (NO token)
+      localStorage.setItem("usuario", JSON.stringify(me.usuario));
 
-      // (opcional más adelante)
-      // localStorage.setItem("token", data.token);
-
+      // 4️⃣ Redirigir según rol
+      router.push("/home");
     } catch (error: any) {
-      // ❌ Error en login
       alert(error.message || "Error al iniciar sesión");
     }
   };
