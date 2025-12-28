@@ -3,7 +3,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --shadow-mentor-shadow: 0px 0px 20px rgba(235, 166, 175, 0.1);
+  --shadow-mentor-shadow: 0px 0px 20px rgba(235, 166, 175, 0.05);
 
   --inset-54\%: 54%;
   --inset-40\%: 40%;

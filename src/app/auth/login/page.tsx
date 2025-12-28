@@ -5,6 +5,9 @@ import Link from "next/link";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { loginUsuario,getMe } from "@/services/auth";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
+
 
 const LoginPage = () => {
   const [carnet, setCarnet] = useState("");
@@ -18,27 +21,32 @@ const LoginPage = () => {
 
 
     if (!carnet || !password) {
-      alert("Debe ingresar carnet y contraseña");
+      toast('Debe ingresar carnet y contraseña', {
+        icon: '⚠️',
+       });
       return;
     }
 
 
 
+    const toastId = toast.loading('Verificando credenciales...');
+
     try {
-      // 1️⃣ Login → backend guarda cookie HttpOnly
       await loginUsuario(carnet, password);
-
-      // 2️⃣ Obtener usuario real desde el backend
       const me = await getMe();
-
-      // 3️⃣ Guardar usuario (NO token)
       localStorage.setItem("usuario", JSON.stringify(me.usuario));
 
-      // 4️⃣ Redirigir según rol
+      toast.dismiss(toastId);
+      toast.success('Bienvenido a Edu.Zar');
+
       router.push("/home");
     } catch (error: any) {
-      alert(error.message || "Error al iniciar sesión");
+      toast.dismiss(toastId);
+      toast.error(error.message || 'Credenciales incorrectas');
     }
+
+
+    
   };
 
 

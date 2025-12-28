@@ -42,8 +42,8 @@ export default function HeaderAdmin({
     <header className="w-full border-b border-border bg-darkmode px-6 py-4 flex items-center justify-between">
       {/* IZQUIERDA */}
       <div className="flex items-center gap-4">
-        <h1 className="text-lg font-bold text-lightsky">Edu.Zar</h1>
-        <span className="text-sm text-lightblue">
+        <h1 className="text-4xl font-bold text-primary">Edu.Zar</h1>
+        <span className="text-base text-white">
           Panel del Administrador
         </span>
       </div>
@@ -52,19 +52,19 @@ export default function HeaderAdmin({
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setOpen(!open)}
-          className="flex items-center gap-3 border border-border px-3 py-1.5 rounded-md hover:bg-tablebg transition"
+          className="flex items-center gap-3 border border-white/20 px-3 py-1.5 rounded-md hover:bg-tablebg transition"
         >
-          <span className="text-sm text-lightsky">
+          <span className="text-xl text-white">
             {nombreCompleto}
           </span>
           <Icon
             icon="tabler:user-hexagon"
-            className="text-[24px] text-primary"
+            className="text-[30px] text-primary"
           />
         </button>
 
         {open && (
-          <div className="absolute right-0 mt-2 w-44 border border-border bg-tablebg shadow-mentor-shadow rounded-md z-50">
+          <div className="absolute right-0 mt-2 w-44 border border-white/20 bg-tablebg shadow-mentor-shadow rounded-md z-50">
             <button
               onClick={onPerfil}
               className="w-full text-left px-4 py-2 text-sm text-lightsky hover:bg-darkmode transition"
