@@ -3,7 +3,11 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import HeaderAdmin from '../components/HeaderAdmin'
+import Sidebar from '../components/Sidebar'
 import { logoutUsuario } from '@/services/auth'
+
+
+
 
 interface Usuario {
   nombre: string
@@ -62,17 +66,25 @@ export default function HomePage() {
       />
 
       {/* CONTENIDO */}
-      <main className="flex-1 p-6 bg-gray-50">
-        <h2 className="text-2xl font-bold mb-4">
-          Bienvenido, {usuario.nombre}
-        </h2>
+      <main className="flex flex-1 bg-gray-50">
 
-        <p className="text-gray-700">
-          Este es el inicio del sistema <strong>Edu.Zar</strong>.
-        </p>
+        {/* SIDEBAR */}
+        <Sidebar />
 
-        {/* Aquí luego van cards, accesos, estadísticas, etc. */}
+        {/* CONTENIDO PRINCIPAL */}
+        <section className="flex-1 p-6">
+          <h2 className="text-2xl font-bold mb-4">
+            Bienvenido, {usuario.nombre}
+          </h2>
+
+          <p className="text-gray-700">
+            Este es el inicio del sistema <strong>Edu.Zar</strong>.
+          </p>
+
+          {/* Aquí luego van cards, accesos, estadísticas, etc. */}
+        </section>
       </main>
+
     </div>
   )
 }

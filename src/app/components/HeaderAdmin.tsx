@@ -42,7 +42,7 @@ export default function HeaderAdmin({
     <header className="w-full border-b border-border bg-darkmode px-6 py-4 flex items-center justify-between">
       {/* IZQUIERDA */}
       <div className="flex items-center gap-4">
-        <h1 className="text-4xl font-bold text-primary">Edu.Zar</h1>
+        <h1 className="text-4xl font-bold text-primary font-brand">Edu.Zar</h1>
         <span className="text-base text-white">
           Panel del Administrador
         </span>
