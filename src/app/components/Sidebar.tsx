@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 
 interface SidebarItem {
   label: string
@@ -12,11 +12,12 @@ interface SidebarItem {
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
   const router = useRouter()
+  const pathname = usePathname()
 
   const items: SidebarItem[] = [
-    { label: 'Colegios', icon: '🏫', path: '/colegios' },
-    { label: 'Añadir Notas', icon: '📝', path: '/notas/nueva' },
-    { label: 'Estudiantes', icon: '👨‍🎓', path: '/estudiantes' },
+    { label: 'Colegios', icon: '🏫', path: '/home/colegios' },
+    { label: 'Añadir Notas', icon: '📝', path: '/home/notas/nueva' },
+    { label: 'Estudiantes', icon: '👨‍🎓', path: '/home/estudiantes' },
   ]
 
   return (
@@ -39,11 +40,7 @@ export default function Sidebar() {
 
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="
-            text-white
-            hover:text-primary
-            transition
-          "
+          className="text-white hover:text-primary transition"
           aria-label="Toggle sidebar"
         >
           ☰
@@ -52,24 +49,29 @@ export default function Sidebar() {
 
       {/* NAV */}
       <nav className="flex flex-col gap-1 p-2">
-        {items.map((item) => (
-          <button
-            key={item.label}
-            onClick={() => router.push(item.path)}
-            className="
-              flex items-center gap-3
-              rounded-md px-3 py-2
-              text-sm
-              text-white
-              hover:bg-primary
-              hover:text-white
-              transition
-            "
-          >
-            <span className="text-lg">{item.icon}</span>
-            {!collapsed && <span>{item.label}</span>}
-          </button>
-        ))}
+        {items.map((item) => {
+          const isActive = pathname.startsWith(item.path)
+
+          return (
+            <button
+              key={item.label}
+              onClick={() => router.push(item.path)}
+              className={`
+                flex items-center gap-3
+                rounded-md px-3 py-2
+                text-sm transition
+                ${
+                  isActive
+                    ? 'bg-primary text-white'
+                    : 'text-white hover:bg-primary hover:text-white'
+                }
+              `}
+            >
+              <span className="text-lg">{item.icon}</span>
+              {!collapsed && <span>{item.label}</span>}
+            </button>
+          )
+        })}
       </nav>
     </aside>
   )

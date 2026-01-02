@@ -7,4 +7,14 @@ export const ENDPOINTS = {
     ME: `${API_BASE_URL}/v1/auth/me`,
     LOGOUT: `${API_BASE_URL}/v1/auth/logout`, 
   },
+
+
+
+  COLEGIOS: {
+    LIST: `${API_BASE_URL}/v1/colegios`,           // GET
+    CREATE: `${API_BASE_URL}/v1/colegios`,         // POST
+    BY_ID: (id: string) => `${API_BASE_URL}/v1/colegios/${id}`, // GET
+    UPDATE: (id: string) => `${API_BASE_URL}/v1/colegios/${id}`, // PATCH
+  },
+
 };
