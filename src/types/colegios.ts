@@ -4,7 +4,13 @@
 export interface Colegio {
   _id: string
   nombre_colegio: string
+  sigla?: string
   niveles: string[]
+  ubicacion?: {
+    departamento?: string
+    provincia?: string
+    ciudad?: string
+  }
   estado: 'ACTIVO' | 'INACTIVO'
   createdAt?: string
   updatedAt?: string
@@ -39,11 +45,22 @@ export interface EditarColegioResponse {
 // POST /v1/colegios
 export interface CrearColegioPayload {
   nombre_colegio: string
+  sigla?: string
   niveles: string[]
+  ubicacion?: {
+    departamento?: string
+    provincia?: string
+    ciudad?: string
+  }
 }
-
 // PATCH /v1/colegios/:id
 export interface EditarColegioPayload {
   nombre_colegio?: string
+  sigla?: string
   niveles?: string[]
+  ubicacion?: {
+    departamento?: string
+    provincia?: string
+    ciudad?: string
+  }
 }

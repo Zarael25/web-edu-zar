@@ -16,12 +16,24 @@ export default function CrearColegioModal({
   onClose,
   onCreated,
 }: Props) {
+  // ===============================
+  // STATES
+  // ===============================
   const [nombre, setNombre] = useState('')
+  const [sigla, setSigla] = useState('')
   const [niveles, setNiveles] = useState<string[]>([])
+
+  const [departamento, setDepartamento] = useState('')
+  const [provincia, setProvincia] = useState('')
+  const [ciudad, setCiudad] = useState('')
+
   const [loading, setLoading] = useState(false)
 
   if (!open) return null
 
+  // ===============================
+  // HANDLERS
+  // ===============================
   const toggleNivel = (nivel: string) => {
     setNiveles((prev) =>
       prev.includes(nivel)
@@ -30,28 +42,51 @@ export default function CrearColegioModal({
     )
   }
 
+  const resetForm = () => {
+    setNombre('')
+    setSigla('')
+    setNiveles([])
+    setDepartamento('')
+    setProvincia('')
+    setCiudad('')
+  }
+
   const handleSubmit = async () => {
+    // ===============================
+    // VALIDACIÓN BÁSICA
+    // ===============================
     if (!nombre || niveles.length === 0) {
-      toast.error('Completa todos los campos')
+      toast.error('Completa los campos obligatorios')
       return
+    }
+
+    // ===============================
+    // CONSTRUIR PAYLOAD
+    // ===============================
+    const payload: CrearColegioPayload = {
+      nombre_colegio: nombre,
+      niveles,
+      ...(sigla && { sigla }),
+      ...(departamento || provincia || ciudad
+        ? {
+            ubicacion: {
+              ...(departamento && { departamento }),
+              ...(provincia && { provincia }),
+              ...(ciudad && { ciudad }),
+            },
+          }
+        : {}),
     }
 
     try {
       setLoading(true)
-
-      const payload: CrearColegioPayload = {
-        nombre_colegio: nombre,
-        niveles,
-      }
 
       await crearColegio(payload)
 
       toast.success('Colegio creado correctamente')
       onClose()
       onCreated?.()
-
-      setNombre('')
-      setNiveles([])
+      resetForm()
     } catch (err: any) {
       toast.error(err.message || 'Error al crear colegio')
     } finally {
@@ -59,6 +94,9 @@ export default function CrearColegioModal({
     }
   }
 
+  // ===============================
+  // RENDER
+  // ===============================
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
       <div className="w-full max-w-md rounded-xl bg-tablebg border border-border p-6 shadow-mentor-shadow">
@@ -81,7 +119,7 @@ export default function CrearColegioModal({
           {/* NOMBRE */}
           <div>
             <label className="block mb-1 text-sm text-lightblue">
-              Nombre del colegio
+              Nombre del colegio *
             </label>
             <input
               value={nombre}
@@ -95,14 +133,36 @@ export default function CrearColegioModal({
                 focus:outline-none
                 focus:border-primary
               "
-              placeholder="Ej. Colegio Don Bosco Sucre"
+              placeholder="Ej. Unidad Educativa Don Bosco"
+            />
+          </div>
+
+          {/* SIGLA */}
+          <div>
+            <label className="block mb-1 text-sm text-lightblue">
+              Sigla
+            </label>
+            <input
+              value={sigla}
+              onChange={(e) => setSigla(e.target.value.toUpperCase())}
+              className="
+                w-full rounded-md
+                bg-darkmode
+                border border-border
+                px-3 py-2
+                text-lightsky
+                focus:outline-none
+                focus:border-primary
+              "
+              placeholder="Ej. UEDB"
+              maxLength={10}
             />
           </div>
 
           {/* NIVELES */}
           <div>
             <label className="block mb-2 text-sm text-lightblue">
-              Niveles
+              Niveles *
             </label>
 
             <div className="grid grid-cols-2 gap-3">
@@ -124,6 +184,34 @@ export default function CrearColegioModal({
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* UBICACIÓN */}
+          <div className="space-y-3">
+            <label className="block text-sm text-lightblue">
+              Ubicación
+            </label>
+
+            <input
+              value={departamento}
+              onChange={(e) => setDepartamento(e.target.value)}
+              className="w-full rounded-md bg-darkmode border border-border px-3 py-2 text-lightsky"
+              placeholder="Departamento"
+            />
+
+            <input
+              value={provincia}
+              onChange={(e) => setProvincia(e.target.value)}
+              className="w-full rounded-md bg-darkmode border border-border px-3 py-2 text-lightsky"
+              placeholder="Provincia"
+            />
+
+            <input
+              value={ciudad}
+              onChange={(e) => setCiudad(e.target.value)}
+              className="w-full rounded-md bg-darkmode border border-border px-3 py-2 text-lightsky"
+              placeholder="Ciudad"
+            />
           </div>
         </div>
 
