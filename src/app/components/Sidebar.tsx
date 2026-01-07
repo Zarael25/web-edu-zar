@@ -17,7 +17,9 @@ export default function Sidebar() {
   const items: SidebarItem[] = [
     { label: 'Colegios', icon: '🏫', path: '/home/colegios' },
     { label: 'Añadir Notas', icon: '📝', path: '/home/notas/nueva' },
+    { label: 'Gestionar Estudiantes', icon: '🎓', path: '/home/gestionar-estudiantes' },
     { label: 'Estudiantes', icon: '👨‍🎓', path: '/home/estudiantes' },
+    
   ]
 
   return (

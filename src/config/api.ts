@@ -17,4 +17,9 @@ export const ENDPOINTS = {
     UPDATE: (id: string) => `${API_BASE_URL}/v1/colegios/${id}`, // PATCH
   },
 
+
+  ESTUDIANTES: {
+    IMPORTAR: `${API_BASE_URL}/v1/estudiantes/importar`, // POST (multipart)
+  },
+
 };
