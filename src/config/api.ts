@@ -19,7 +19,10 @@ export const ENDPOINTS = {
 
 
   ESTUDIANTES: {
-    IMPORTAR: `${API_BASE_URL}/v1/estudiantes/importar`, // POST (multipart)
+    LIST: `${API_BASE_URL}/v1/estudiantes`, // ✅ GET (con filtros)
+    CREATE: `${API_BASE_URL}/v1/estudiantes`, // POST
+    BY_ID: (id: string) => `${API_BASE_URL}/v1/estudiantes/${id}`, // GET
+    IMPORTAR: `${API_BASE_URL}/v1/estudiantes/importar`, // POST multipart
   },
-
+  
 };
