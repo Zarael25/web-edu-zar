@@ -2,26 +2,82 @@
 
 import { useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
+import { RolUsuario } from '@/types/roles'
+import { Usuario } from '@/types/usuario'
 
+/* =======================
+   TIPOS
+======================= */
 interface SidebarItem {
   label: string
   icon: string
   path: string
+  roles: RolUsuario[]
 }
 
+/* =======================
+   COMPONENT
+======================= */
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
 
+  /* =======================
+     USUARIO LOGUEADO
+  ======================= */
+  const usuario: Usuario | null =
+    typeof window !== 'undefined'
+      ? JSON.parse(localStorage.getItem('usuario') || 'null')
+      : null
+
+  const roles: RolUsuario[] = usuario?.roles ?? []
+
+  /* =======================
+     ITEMS DEL SIDEBAR
+  ======================= */
   const items: SidebarItem[] = [
-    { label: 'Colegios', icon: '🏫', path: '/home/colegios' },
-    { label: 'Añadir Notas', icon: '📝', path: '/home/notas/nueva' },
-    { label: 'Gestionar Estudiantes', icon: '🎓', path: '/home/gestionar-estudiantes' },
-    { label: 'Estudiantes', icon: '👨‍🎓', path: '/home/estudiantes' },
-    
+    {
+      label: 'Colegios',
+      icon: '🏫',
+      path: '/home/colegios',
+      roles: ['admin'], // 🔐 SOLO ADMIN
+    },
+    {
+      label: 'Añadir Notas',
+      icon: '📝',
+      path: '/home/notas/nueva',
+      roles: ['admin', 'profesor'],
+    },
+    {
+      label: 'Gestionar Estudiantes',
+      icon: '🎓',
+      path: '/home/gestionar-estudiantes',
+      roles: ['admin', 'secretaria', 'regencia'],
+    },
+    {
+      label: 'Estudiantes',
+      icon: '👨‍🎓',
+      path: '/home/estudiantes',
+      roles: [
+        'admin',
+        'profesor',
+        'secretaria',
+        'informaciones',
+      ],
+    },
   ]
 
+  /* =======================
+     FILTRADO POR ROL
+  ======================= */
+  const filteredItems = items.filter(item =>
+    item.roles.some(role => roles.includes(role))
+  )
+
+  /* =======================
+     RENDER
+  ======================= */
   return (
     <aside
       className={`
@@ -51,7 +107,7 @@ export default function Sidebar() {
 
       {/* NAV */}
       <nav className="flex flex-col gap-1 p-2">
-        {items.map((item) => {
+        {filteredItems.map((item) => {
           const isActive = pathname.startsWith(item.path)
 
           return (

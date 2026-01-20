@@ -1,3 +1,4 @@
+import { RolUsuario } from './roles'
 export interface Usuario {
   id: string
   email: string
@@ -11,7 +12,7 @@ export interface Usuario {
   genero: 'MASCULINO' | 'FEMENINO'
   celular: string
   estado: 'ACTIVE' | 'INACTIVE'
-  roles: string[]
+  roles: RolUsuario[] 
   niveles: string[]
   createdAt: string
   updatedAt: string
